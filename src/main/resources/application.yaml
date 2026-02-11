@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: note
+  datasource:
+    url: jdbc:h2:file:./data/note;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  h2:
+    console:
+      enabled: true  # Change this to 'enabled' instead of 'enable'
+  jpa:
+    hibernate:
+      ddl-auto: update  # This manages your schema
+    show-sql: true  # Optional: Show SQL queries in logs
