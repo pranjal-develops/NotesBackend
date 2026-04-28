@@ -43,18 +43,18 @@ public class NotesServiceTest {
     }
 
     @Test
-    void testCreateNote(){
+    void testCreateNote() {
 
         when(notesRepo.save(note1)).thenReturn(note1);
 
         Note createdNote = notesService.createNote(note1);
 
         assertEquals(note1, createdNote);
-        verify(notesRepo,times(1)).save(note1);
+        verify(notesRepo, times(1)).save(note1);
     }
 
     @Test
-    void testGetAllNotes(){
+    void testGetAllNotes() {
         when(notesRepo.findAll()).thenReturn(Arrays.asList(note1, note2));
         List<Note> notes = notesService.getAllNotes();
 
@@ -65,7 +65,7 @@ public class NotesServiceTest {
     }
 
     @Test
-    void testGetNoteById(){
+    void testGetNoteById() {
         Long noteId = 1L;
 
         when(notesRepo.findById(noteId)).thenReturn(Optional.of(note1));
@@ -78,7 +78,7 @@ public class NotesServiceTest {
     }
 
     @Test
-    void testDeleteNote(){
+    void testDeleteNote() {
         Long noteId = 1L;
         notesService.deleteNote(noteId);
         verify(notesRepo, times(1)).deleteById(noteId); //verify() is a method used to check if certain interactions were made with mock objects. It's a crucial component for unit testing as it allows you to assert that specific methods were called on the mocked instances, helping ensure that your code behaves as expected.

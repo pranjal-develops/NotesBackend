@@ -29,4 +29,8 @@ public class NotesService {
     public void deleteNote(Long id) {
         noteRepo.deleteById(id);
     }
+
+    public List<Note> search(String keyword) {
+        return noteRepo.findByKeyword(keyword);
+    }
 }

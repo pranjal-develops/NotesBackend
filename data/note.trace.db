@@ -1,0 +1,48 @@
+2026-03-05 13:15:40.359618+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:41.611518+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:44.795880+05:30 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:44.966327+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:46.938182+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:47.099387+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:47.271555+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:15:47.418098+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Test Descaasdfdasfasfadsfadsfkladjsfkladjskflajsdklfjaksljfkla\\000aadsfnkjadh... (327)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:34.018283+05:30 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (331)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:34.224457+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (331)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:35.090815+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (331)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:38.653280+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (283)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:39.431036+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (283)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:41.753281+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (272)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:44.255575+05:30 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (266)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
+2026-03-05 13:16:48.914419+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'Test Descaasdfdasfas  adsfadsjfkljads kl asfjkl ads l lks jfkljfkljflk iadjskfl... (258)"; SQL statement:
+update note set created_date=?,description=?,title=?,updated_date=? where id=? [22001-240]
