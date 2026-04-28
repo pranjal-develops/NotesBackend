@@ -22,9 +22,22 @@ public class NotesController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
 //    public List<NoteDTO> getAll() {return noteService.getAllNotes()}
-    public List<NoteDTO> getAll() {
-        return noteService.getAllNotes().stream()
-                .map(note -> new NoteDTO(note.getId(), note.getTitle(), note.getDescription(), note.getCreatedDate(), note.getUpdatedDate()))
+    public List<NoteDTO> getAll(@RequestParam(required = false) String q) {
+        if (q == null || q.isBlank()) {
+            return noteService.getAllNotes().stream()
+                    .map(note -> new NoteDTO(note.getId(),
+                            note.getTitle(),
+                            note.getDescription(),
+                            note.getCreatedDate(),
+                            note.getUpdatedDate()))
+                    .collect(Collectors.toList());
+        }
+        return noteService.search(q).stream()
+                .map(note -> new NoteDTO(note.getId(),
+                        note.getTitle(),
+                        note.getDescription(),
+                        note.getCreatedDate(),
+                        note.getUpdatedDate()))
                 .collect(Collectors.toList());
     }
 
