@@ -15,6 +15,7 @@ public class NoteDTO {
     private String description;
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
+    private String drawingData;
 
 
     // Constructors
@@ -42,6 +43,15 @@ public class NoteDTO {
         this.createdDate = createdDate;
         this.updatedDate = OffsetDateTime.now();
 
+    }
+
+    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
     }
 //    // Getters and Setters
 //    public Long getId() {

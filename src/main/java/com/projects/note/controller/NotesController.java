@@ -29,7 +29,8 @@ public class NotesController {
                             note.getTitle(),
                             note.getDescription(),
                             note.getCreatedDate(),
-                            note.getUpdatedDate()))
+                            note.getUpdatedDate(),
+                            note.getDrawingData()))
                     .collect(Collectors.toList());
         }
         return noteService.search(q).stream()
@@ -37,14 +38,15 @@ public class NotesController {
                         note.getTitle(),
                         note.getDescription(),
                         note.getCreatedDate(),
-                        note.getUpdatedDate()))
+                        note.getUpdatedDate(),
+                        note.getDrawingData()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         Optional<Note> note = noteService.getNoteById(id);
-        return note.map(n -> new ResponseEntity<>(new NoteDTO(n.getId(), n.getTitle(), n.getDescription(), n.getCreatedDate(), n.getUpdatedDate()), HttpStatus.OK))
+        return note.map(n -> new ResponseEntity<>(new NoteDTO(n.getId(), n.getTitle(), n.getDescription(), n.getCreatedDate(), n.getUpdatedDate(), n.getDrawingData()), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -56,7 +58,7 @@ public class NotesController {
         note.setDescription(noteDTO.getDescription());
         note.setCreatedDate(OffsetDateTime.now());
         note.setUpdatedDate(OffsetDateTime.now());
-
+        note.setDrawingData(noteDTO.getDrawingData());
         Note createdNote = noteService.createNote(note);
         return new NoteDTO(createdNote.getId(), createdNote.getTitle(), createdNote.getDescription());
     }
@@ -73,13 +75,15 @@ public class NotesController {
                     noteDTO.getTitle() != null && !noteDTO.getTitle().isEmpty()
                             ? noteDTO.getTitle()
                             : old.getTitle());
-            old.setDescription(
-                    noteDTO.getDescription() != null && !noteDTO.getDescription().isEmpty()
-                            ? noteDTO.getDescription()
-                            : old.getDescription());
+//            old.setDescription(
+//                    noteDTO.getDescription() != null && !noteDTO.getDescription().isEmpty()
+//                            ? noteDTO.getDescription()
+//                            : old.getDescription()); // It's stupid to add this. I don't know what I was thinking
+            old.setDescription(noteDTO.getDescription());
+            old.setDrawingData(noteDTO.getDrawingData());
             old.setUpdatedDate(OffsetDateTime.now());
             Note updatedNote = noteService.createNote(old); // Save the updated note
-            return ResponseEntity.ok(new NoteDTO(updatedNote.getId(), updatedNote.getTitle(), updatedNote.getDescription(), updatedNote.getCreatedDate(), OffsetDateTime.now()));
+            return ResponseEntity.ok(new NoteDTO(updatedNote.getId(), updatedNote.getTitle(), updatedNote.getDescription(), updatedNote.getCreatedDate(), OffsetDateTime.now(), updatedNote.getDrawingData()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
