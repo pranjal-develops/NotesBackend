@@ -60,7 +60,11 @@ public class NotesController {
         note.setUpdatedDate(OffsetDateTime.now());
         note.setDrawingData(noteDTO.getDrawingData());
         Note createdNote = noteService.createNote(note);
-        return new NoteDTO(createdNote.getId(), createdNote.getTitle(), createdNote.getDescription());
+        return new NoteDTO(createdNote.getId(), 
+                          createdNote.getTitle(), 
+                          createdNote.getDescription(), 
+                          createdNote.getCreatedDate(), 
+                          createdNote.getDrawingData());
     }
 
     // public Note create(@RequestBody Note note){
