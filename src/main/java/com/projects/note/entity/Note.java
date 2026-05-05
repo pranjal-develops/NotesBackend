@@ -22,6 +22,8 @@ public class Note {
     private OffsetDateTime updatedDate;
     @ElementCollection
     private List<String> tag;
+    private String color;
+    private boolean isPinned;
 
     @Column(columnDefinition = "TEXT")
     private String drawingData;
@@ -57,4 +59,24 @@ public class Note {
         this.drawingData = drawingData;
     }
 
+    public Note(String title1, String description1, String drawingData, String color, boolean isPinned) {
+        this.title = title1;
+        this.description = description1;
+        this.createdDate = OffsetDateTime.now();
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
+        this.color = color;
+        this.isPinned = isPinned;
+    }
+
+    public Note(Long id, String title1, String description1, String drawingData, String color, boolean isPinned) {
+        this.id = id;
+        this.title = title1;
+        this.description = description1;
+        this.createdDate = OffsetDateTime.now();
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
+        this.color = color;
+        this.isPinned = isPinned;
+    }
 }

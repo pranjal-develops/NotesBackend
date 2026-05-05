@@ -21,7 +21,6 @@ public class NotesController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-//    public List<NoteDTO> getAll() {return noteService.getAllNotes()}
     public List<NoteDTO> getAll(@RequestParam(required = false) String q) {
         if (q == null || q.isBlank()) {
             return noteService.getAllNotes().stream()
@@ -30,7 +29,9 @@ public class NotesController {
                             note.getDescription(),
                             note.getCreatedDate(),
                             note.getUpdatedDate(),
-                            note.getDrawingData()))
+                            note.getDrawingData(),
+                            note.getColor(),
+                            note.isPinned()))
                     .collect(Collectors.toList());
         }
         return noteService.search(q).stream()
@@ -39,32 +40,43 @@ public class NotesController {
                         note.getDescription(),
                         note.getCreatedDate(),
                         note.getUpdatedDate(),
-                        note.getDrawingData()))
+                        note.getDrawingData(),
+                        note.getColor(),
+                        note.isPinned()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         Optional<Note> note = noteService.getNoteById(id);
-        return note.map(n -> new ResponseEntity<>(new NoteDTO(n.getId(), n.getTitle(), n.getDescription(), n.getCreatedDate(), n.getUpdatedDate(), n.getDrawingData()), HttpStatus.OK))
+        return note.map(n -> new ResponseEntity<>(new NoteDTO(n.getId(),
+                        n.getTitle(),
+                        n.getDescription(),
+                        n.getCreatedDate(),
+                        n.getUpdatedDate(),
+                        n.getDrawingData(),
+                        n.getColor(),
+                        n.isPinned()), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NoteDTO create(@RequestBody NoteDTO noteDTO) {
-        Note note = new Note();
-        note.setTitle(noteDTO.getTitle());
-        note.setDescription(noteDTO.getDescription());
-        note.setCreatedDate(OffsetDateTime.now());
-        note.setUpdatedDate(OffsetDateTime.now());
-        note.setDrawingData(noteDTO.getDrawingData());
+        Note note = new Note(
+                noteDTO.getTitle(),
+                noteDTO.getDescription(),
+                noteDTO.getDrawingData(),
+                noteDTO.getColor(),
+                noteDTO.isPinned()
+        );
         Note createdNote = noteService.createNote(note);
-        return new NoteDTO(createdNote.getId(), 
-                          createdNote.getTitle(), 
-                          createdNote.getDescription(), 
-                          createdNote.getCreatedDate(), 
-                          createdNote.getDrawingData());
+        return new NoteDTO(createdNote.getId(),
+                createdNote.getTitle(),
+                createdNote.getDescription(),
+                createdNote.getDrawingData(),
+                createdNote.getColor(),
+                createdNote.isPinned());
     }
 
     // public Note create(@RequestBody Note note){
@@ -86,8 +98,16 @@ public class NotesController {
             old.setDescription(noteDTO.getDescription());
             old.setDrawingData(noteDTO.getDrawingData());
             old.setUpdatedDate(OffsetDateTime.now());
+            old.setColor(noteDTO.getColor());
+            old.setPinned(noteDTO.isPinned());
             Note updatedNote = noteService.createNote(old); // Save the updated note
-            return ResponseEntity.ok(new NoteDTO(updatedNote.getId(), updatedNote.getTitle(), updatedNote.getDescription(), updatedNote.getCreatedDate(), OffsetDateTime.now(), updatedNote.getDrawingData()));
+            return ResponseEntity.ok(new NoteDTO(updatedNote.getId(),
+                    updatedNote.getTitle(),
+                    updatedNote.getDescription(),
+                    updatedNote.getCreatedDate(),
+                    updatedNote.getDrawingData(),
+                    updatedNote.getColor(),
+                    updatedNote.isPinned()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

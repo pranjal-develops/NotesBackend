@@ -6,13 +6,16 @@ import com.projects.note.entity.Note;
 import com.projects.note.service.NotesService;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -41,11 +44,51 @@ public class NotesControllerTest {
 
         when(notesService.getAllNotes()).thenReturn(Arrays.asList(note1, note2));
 
-        List<NoteDTO> notes = notesController.getAll();
+        List<NoteDTO> notes = notesController.getAll(null);
 
         assertEquals(2, notes.size());
         assertEquals("title1", notes.get(0).getTitle());
         assertEquals("title2", notes.get(1).getTitle());
+    }
+
+    @Test
+    public void testSearchWithTitleNotes() {
+        Note note1 = new Note();
+        note1.setId(1L);
+        note1.setTitle("title1 search");
+        note1.setDescription("description1");
+
+        Note note2 = new Note();
+        note2.setId(2L);
+        note2.setTitle("title2");
+        note2.setDescription("description2");
+
+        when(notesService.search("search")).thenReturn(List.of(note1));
+
+        List<NoteDTO> notes = notesController.getAll("search");
+
+        assertEquals(1, notes.size());
+        assertEquals("title1 search", notes.getFirst().getTitle());
+    }
+
+    @Test
+    public void testSearchWithDescriptionNotes() {
+        Note note1 = new Note();
+        note1.setId(1L);
+        note1.setTitle("title1");
+        note1.setDescription("description1");
+
+        Note note2 = new Note();
+        note2.setId(2L);
+        note2.setTitle("title2");
+        note2.setDescription("description2 search");
+
+        when(notesService.search("search")).thenReturn(List.of(note2));
+
+        List<NoteDTO> notes = notesController.getAll("search");
+
+        assertEquals(1, notes.size());
+        assertEquals("description2 search", notes.getFirst().getDescription());
     }
 
     @Test
@@ -92,28 +135,27 @@ public class NotesControllerTest {
     }
 
 
-
     @Test
     void testUpdateNoteFound() {
 
-    Long noteId = 1L;
-    NoteDTO noteDTO = new NoteDTO(null, "Updated Note", "Updated description");
-    Note note = new Note();
-    note.setId(noteDTO.getId());
-    note.setTitle("Old Title");
-    note.setDescription("Old Description");
+        Long noteId = 1L;
+        NoteDTO noteDTO = new NoteDTO(null, "Updated Note", "Updated description");
+        Note note = new Note();
+        note.setId(noteDTO.getId());
+        note.setTitle("Old Title");
+        note.setDescription("Old Description");
 
-    when(notesService.getNoteById(noteId)).thenReturn(Optional.of(note));
-    when(notesService.createNote(any(Note.class))).thenReturn(note);
+        when(notesService.getNoteById(noteId)).thenReturn(Optional.of(note));
+        when(notesService.createNote(any(Note.class))).thenReturn(note);
 
-    ResponseEntity<?> response = notesController.update(noteId,noteDTO);
+        ResponseEntity<?> response = notesController.update(noteId, noteDTO);
 
-    assertEquals(HttpStatus.OK,response.getStatusCode());
-    NoteDTO updatedNoteDTO =  (NoteDTO) response.getBody();
-    assertNotNull(updatedNoteDTO);
-    assertEquals("Updated Note", updatedNoteDTO.getTitle());
-    assertEquals("Updated description", updatedNoteDTO.getDescription());
-    verify(notesService, times(1)).createNote(any(Note.class));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        NoteDTO updatedNoteDTO = (NoteDTO) response.getBody();
+        assertNotNull(updatedNoteDTO);
+        assertEquals("Updated Note", updatedNoteDTO.getTitle());
+        assertEquals("Updated description", updatedNoteDTO.getDescription());
+        verify(notesService, times(1)).createNote(any(Note.class));
 
     }
 

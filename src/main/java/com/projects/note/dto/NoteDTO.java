@@ -16,6 +16,8 @@ public class NoteDTO {
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
     private String drawingData;
+    private String color;
+    private boolean isPinned;
 
 
     // Constructors
@@ -53,6 +55,38 @@ public class NoteDTO {
         this.updatedDate = OffsetDateTime.now();
         this.drawingData = drawingData;
     }
+
+    public NoteDTO(Long id, String title, String description, String drawingData) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.createdDate = OffsetDateTime.now();
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
+    }
+
+    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
+        this.color = color;
+        this.isPinned = isPinned;
+    }
+
+    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.createdDate = OffsetDateTime.now();
+        this.updatedDate = OffsetDateTime.now();
+        this.drawingData = drawingData;
+        this.color = color;
+        this.isPinned = isPinned;
+    }
+
 //    // Getters and Setters
 //    public Long getId() {
 //        return id;
