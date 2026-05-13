@@ -33,4 +33,8 @@ public class NotesService {
     public List<Note> search(String keyword) {
         return noteRepo.findByKeyword(keyword);
     }
+
+    public List<Note> getByTag(String tag) {
+        return noteRepo.findByTagsContaining(tag);
+    }
 }

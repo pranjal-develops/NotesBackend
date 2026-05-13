@@ -21,7 +21,7 @@ public class Note {
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
     @ElementCollection
-    private List<String> tag;
+    private List<String> tags;
     private String color;
     private boolean isPinned;
 
@@ -35,31 +35,41 @@ public class Note {
         this.updatedDate = OffsetDateTime.now();
     }
 
-    public Note(String title1, String description1) {
-        this.title = title1;
-        this.description = description1;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-    }
+//    public Note(String title1, String description1) {
+//        this.title = title1;
+//        this.description = description1;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//    }
 
-    public Note(Long id, String title1, String description1) {
-        this.id = id;
-        this.title = title1;
-        this.description = description1;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-    }
+//    public Note(Long id, String title1, String description1) {
+//        this.id = id;
+//        this.title = title1;
+//        this.description = description1;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//    }
 
-    public Note(Long id, String title1, String description1, String drawingData) {
-        this.id = id;
-        this.title = title1;
-        this.description = description1;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-    }
+//    public Note(Long id, String title1, String description1, String drawingData) {
+//        this.id = id;
+//        this.title = title1;
+//        this.description = description1;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//    }
 
-    public Note(String title1, String description1, String drawingData, String color, boolean isPinned) {
+//    public Note(String title1, String description1, String drawingData, String color, boolean isPinned) {
+//        this.title = title1;
+//        this.description = description1;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//        this.color = color;
+//        this.isPinned = isPinned;
+//    }
+
+    public Note(String title1, String description1, String drawingData, String color, boolean isPinned, List<String> tags) {
         this.title = title1;
         this.description = description1;
         this.createdDate = OffsetDateTime.now();
@@ -67,16 +77,17 @@ public class Note {
         this.drawingData = drawingData;
         this.color = color;
         this.isPinned = isPinned;
+        this.tags = tags;
     }
 
-    public Note(Long id, String title1, String description1, String drawingData, String color, boolean isPinned) {
-        this.id = id;
-        this.title = title1;
-        this.description = description1;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-        this.color = color;
-        this.isPinned = isPinned;
-    }
+//    public Note(Long id, String title1, String description1, String drawingData, String color, boolean isPinned) {
+//        this.id = id;
+//        this.title = title1;
+//        this.description = description1;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//        this.color = color;
+//        this.isPinned = isPinned;
+//    }
 }

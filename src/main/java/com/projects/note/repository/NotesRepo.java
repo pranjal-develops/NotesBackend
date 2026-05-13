@@ -12,4 +12,6 @@ public interface NotesRepo extends CrudRepository<Note, Long> {
     //Same Thing
     @Query("Select n from Note n WHERE LOWER(n.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(n.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Note> findByKeyword(String keyword);
+
+    List<Note> findByTagsContaining(String tag);
 }

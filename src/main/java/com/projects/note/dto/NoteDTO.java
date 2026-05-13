@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Data //This annotation can create getter and setter
 @AllArgsConstructor //This annotation will create a constructor with parameters with all fields
@@ -18,6 +19,7 @@ public class NoteDTO {
     private String drawingData;
     private String color;
     private boolean isPinned;
+    private List<String> tags;
 
 
     // Constructors
@@ -38,34 +40,67 @@ public class NoteDTO {
         this.updatedDate = OffsetDateTime.now();
     }
 
-    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.updatedDate = OffsetDateTime.now();
+//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.createdDate = createdDate;
+//        this.updatedDate = OffsetDateTime.now();
+//    }
 
-    }
+//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.createdDate = createdDate;
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//    }
 
-    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-    }
+//    public NoteDTO(Long id, String title, String description, String drawingData) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//    }
 
-    public NoteDTO(Long id, String title, String description, String drawingData) {
+//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.createdDate = createdDate;
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//        this.color = color;
+//        this.isPinned = isPinned;
+//    }
+
+//    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.createdDate = OffsetDateTime.now();
+//        this.updatedDate = OffsetDateTime.now();
+//        this.drawingData = drawingData;
+//        this.color = color;
+//        this.isPinned = isPinned;
+//    }
+
+    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned, List<String> tags) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.createdDate = OffsetDateTime.now();
         this.updatedDate = OffsetDateTime.now();
         this.drawingData = drawingData;
+        this.color = color;
+        this.isPinned = isPinned;
+        this.tags = tags;
     }
 
-    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned) {
+    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned, List<String> tags) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -74,17 +109,7 @@ public class NoteDTO {
         this.drawingData = drawingData;
         this.color = color;
         this.isPinned = isPinned;
-    }
-
-    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-        this.color = color;
-        this.isPinned = isPinned;
+        this.tags = tags;
     }
 
 //    // Getters and Setters

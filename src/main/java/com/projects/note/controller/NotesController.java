@@ -21,7 +21,21 @@ public class NotesController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NoteDTO> getAll(@RequestParam(required = false) String q) {
+    public List<NoteDTO> getAll(@RequestParam(required = false) String q,
+                                @RequestParam(required = false) String tag) {
+        if (tag != null && !tag.isBlank()) {
+            return noteService.getByTag(tag).stream()
+                    .map(note -> new NoteDTO(note.getId(),
+                            note.getTitle(),
+                            note.getDescription(),
+                            note.getCreatedDate(),
+                            note.getUpdatedDate(),
+                            note.getDrawingData(),
+                            note.getColor(),
+                            note.isPinned(),
+                            note.getTags()))
+                    .collect(Collectors.toList());
+        }
         if (q == null || q.isBlank()) {
             return noteService.getAllNotes().stream()
                     .map(note -> new NoteDTO(note.getId(),
@@ -31,7 +45,8 @@ public class NotesController {
                             note.getUpdatedDate(),
                             note.getDrawingData(),
                             note.getColor(),
-                            note.isPinned()))
+                            note.isPinned(),
+                            note.getTags()))
                     .collect(Collectors.toList());
         }
         return noteService.search(q).stream()
@@ -42,7 +57,8 @@ public class NotesController {
                         note.getUpdatedDate(),
                         note.getDrawingData(),
                         note.getColor(),
-                        note.isPinned()))
+                        note.isPinned(),
+                        note.getTags()))
                 .collect(Collectors.toList());
     }
 
@@ -56,7 +72,8 @@ public class NotesController {
                         n.getUpdatedDate(),
                         n.getDrawingData(),
                         n.getColor(),
-                        n.isPinned()), HttpStatus.OK))
+                        n.isPinned(),
+                        n.getTags()), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -68,7 +85,8 @@ public class NotesController {
                 noteDTO.getDescription(),
                 noteDTO.getDrawingData(),
                 noteDTO.getColor(),
-                noteDTO.isPinned()
+                noteDTO.isPinned(),
+                noteDTO.getTags()
         );
         Note createdNote = noteService.createNote(note);
         return new NoteDTO(createdNote.getId(),
@@ -76,7 +94,8 @@ public class NotesController {
                 createdNote.getDescription(),
                 createdNote.getDrawingData(),
                 createdNote.getColor(),
-                createdNote.isPinned());
+                createdNote.isPinned(),
+                createdNote.getTags());
     }
 
     // public Note create(@RequestBody Note note){
@@ -100,6 +119,7 @@ public class NotesController {
             old.setUpdatedDate(OffsetDateTime.now());
             old.setColor(noteDTO.getColor());
             old.setPinned(noteDTO.isPinned());
+            old.setTags(noteDTO.getTags());
             Note updatedNote = noteService.createNote(old); // Save the updated note
             return ResponseEntity.ok(new NoteDTO(updatedNote.getId(),
                     updatedNote.getTitle(),
@@ -107,7 +127,8 @@ public class NotesController {
                     updatedNote.getCreatedDate(),
                     updatedNote.getDrawingData(),
                     updatedNote.getColor(),
-                    updatedNote.isPinned()));
+                    updatedNote.isPinned(),
+                    updatedNote.getTags()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

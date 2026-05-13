@@ -44,7 +44,7 @@ public class NotesControllerTest {
 
         when(notesService.getAllNotes()).thenReturn(Arrays.asList(note1, note2));
 
-        List<NoteDTO> notes = notesController.getAll(null);
+        List<NoteDTO> notes = notesController.getAll(null, null);
 
         assertEquals(2, notes.size());
         assertEquals("title1", notes.get(0).getTitle());
@@ -65,7 +65,7 @@ public class NotesControllerTest {
 
         when(notesService.search("search")).thenReturn(List.of(note1));
 
-        List<NoteDTO> notes = notesController.getAll("search");
+        List<NoteDTO> notes = notesController.getAll("search", null);
 
         assertEquals(1, notes.size());
         assertEquals("title1 search", notes.getFirst().getTitle());
@@ -85,7 +85,7 @@ public class NotesControllerTest {
 
         when(notesService.search("search")).thenReturn(List.of(note2));
 
-        List<NoteDTO> notes = notesController.getAll("search");
+        List<NoteDTO> notes = notesController.getAll("search", null);
 
         assertEquals(1, notes.size());
         assertEquals("description2 search", notes.getFirst().getDescription());
