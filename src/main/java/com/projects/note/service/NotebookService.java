@@ -2,6 +2,7 @@ package com.projects.note.service;
 
 import com.projects.note.dto.NotebookDTO;
 import com.projects.note.dto.PageDTO;
+import com.projects.note.dto.PageSummaryDTO;
 import com.projects.note.entity.Notebook;
 import com.projects.note.repository.NotebookRepo;
 import jakarta.transaction.Transactional;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,13 +54,9 @@ public class NotebookService {
     }
 
     private NotebookDTO convertToDTO(Notebook notebook) {
-        List<PageDTO> pageDTOs = notebook.getPages().stream().map(page -> new PageDTO(page.getId(),
+        List<PageSummaryDTO> pageSummaries = notebook.getPages().stream().map(page -> new PageSummaryDTO(page.getId(),
                         page.getTitle(),
-                        page.getContent(),
-                        page.getPageOrder(),
-                        page.getCreatedDate(),
-                        page.getUpdatedDate(),
-                        notebook.getId()))
+                        page.getPageOrder()))
                 .toList();
         return new NotebookDTO(
                 notebook.getId(),
@@ -69,7 +65,7 @@ public class NotebookService {
                 notebook.getColor(),
                 notebook.getCreatedDate(),
                 notebook.getUpdatedDate(),
-                pageDTOs
+                pageSummaries
         );
     }
 

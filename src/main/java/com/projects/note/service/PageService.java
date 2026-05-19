@@ -17,6 +17,18 @@ public class PageService {
     private final PageRepo pageRepo;
     private final NotebookRepo notebookRepo;
 
+    public PageDTO getPageById(Long id) {
+        return pageRepo.findById(id).map(this::convertToDto).orElseThrow(() -> new RuntimeException("Page not found"));
+    }
+
+    public PageDTO getPageInNotebook(Long notebookId, Long pageId) {
+        Page page = pageRepo.findById(pageId).orElseThrow(() -> new RuntimeException("Page not found"));
+        if (!page.getNotebook().getId().equals(notebookId)) {
+            throw new RuntimeException("This page does not belong to the specific notebook!");
+        }
+        return convertToDto(page);
+    }
+
     @Transactional
     public PageDTO addPageToNotebook(Long notebookId, PageDTO dto) {
         Notebook notebook = notebookRepo.findById(notebookId)

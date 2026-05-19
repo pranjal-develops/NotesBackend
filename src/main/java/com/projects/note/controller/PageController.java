@@ -4,6 +4,7 @@ import com.projects.note.dto.PageDTO;
 import com.projects.note.service.PageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,14 +13,33 @@ import org.springframework.web.bind.annotation.*;
 public class PageController {
     private final PageService pageService;
 
+    @GetMapping("/{pageId}")
+    public ResponseEntity<PageDTO> getPage(@PathVariable Long notebookId, @PathVariable Long pageId) {
+        try {
+            return ResponseEntity.ok(pageService.getPageInNotebook(notebookId, pageId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PageDTO addPage(@PathVariable Long notebookId, @RequestBody PageDTO dto) {
-        return pageService.addPageToNotebook(notebookId, dto);
+    public ResponseEntity<PageDTO> addPage(@PathVariable Long notebookId, @RequestBody PageDTO dto) {
+        try {
+            PageDTO created = pageService.addPageToNotebook(notebookId, dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{pageId}")
-    public PageDTO updatePage(@PathVariable Long pageId, @RequestBody PageDTO dto) {
-        return pageService.updatePage(pageId, dto);
+    public ResponseEntity<PageDTO> updatePage(@PathVariable Long pageId, @RequestBody PageDTO dto) {
+        try {
+            return ResponseEntity.ok(pageService.updatePage(pageId, dto));
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
