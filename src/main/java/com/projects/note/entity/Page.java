@@ -16,7 +16,8 @@ public class Page {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    private int pageOrder;
+    //    private int pageOrder; // Commented it since primitive int cannot be null, this giving error in DTO when pageOrder is not provided
+    private Integer pageOrder;
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
 

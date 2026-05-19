@@ -17,5 +17,5 @@ public class NotebookDTO {
     private String color;
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
-    private List<PageDTO> pages;
+    private List<PageSummaryDTO> pages;
 }

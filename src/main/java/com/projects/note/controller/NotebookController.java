@@ -4,6 +4,7 @@ import com.projects.note.dto.NotebookDTO;
 import com.projects.note.service.NotebookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,13 @@ public class NotebookController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public NotebookDTO getByID(@PathVariable Long id) {
-        return notebookService.getNotebookById(id);
+//    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<NotebookDTO> getByID(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(notebookService.getNotebookById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -33,9 +38,13 @@ public class NotebookController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public NotebookDTO update(@PathVariable Long id, @RequestBody NotebookDTO notebookDTO) {
-        return notebookService.updateNotebook(id, notebookDTO);
+//    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<NotebookDTO> update(@PathVariable Long id, @RequestBody NotebookDTO notebookDTO) {
+        try {
+            return ResponseEntity.ok(notebookService.updateNotebook(id, notebookDTO));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")

@@ -4,17 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageDTO {
+public class PageSummaryDTO {
     private Long id;
     private String title;
-    private String content;
     private Integer pageOrder;
-    private OffsetDateTime createdDate;
-    private OffsetDateTime updatedDate;
-    private Long notebook_id;
 }
