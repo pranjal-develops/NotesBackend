@@ -4,6 +4,7 @@ import com.projects.note.dto.NotebookDTO;
 import com.projects.note.dto.PageDTO;
 import com.projects.note.dto.PageSummaryDTO;
 import com.projects.note.entity.Notebook;
+import com.projects.note.entity.Page;
 import com.projects.note.repository.NotebookRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,22 @@ public class NotebookService {
         notebook.setName(dto.getName());
         notebook.setDescription(dto.getDescription());
         notebook.setColor(dto.getColor());
+        final Notebook savedNotebook = notebookRepo.save(notebook);
+
+        if (dto.getPages() != null && !dto.getPages().isEmpty()) {
+            List<Page> initialPages = dto.getPages().stream().map(summaryDto -> {
+                Page page = new Page();
+                page.setTitle(summaryDto.getTitle());
+                page.setContent("");
+                page.setPageOrder(summaryDto.getPageOrder());
+                page.setNotebook(savedNotebook);
+                return page;
+            }).toList();
+            // We need to save the pages explicitly or ensure CascadeType.ALL is on the entity
+            savedNotebook.getPages().addAll(initialPages);
+            return convertToDTO(notebookRepo.save(savedNotebook));
+
+        }
         return convertToDTO(notebookRepo.save(notebook));
     }
 
