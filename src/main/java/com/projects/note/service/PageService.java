@@ -35,7 +35,11 @@ public class PageService {
                 .orElseThrow(() -> new RuntimeException("Notebook not present"));
         Page page = new Page();
         page.setTitle(dto.getTitle());
-        page.setContent(dto.getContent());
+//        page.setContent(dto.getContent());
+        page.setContentHtml(dto.getContentHtml());
+        page.setDrawings(dto.getDrawing());
+        page.setCharts(dto.getCharts());
+        page.setImages(dto.getImages());
         page.setNotebook(notebook);
         page.setPageOrder(notebook.getPages().size());
         return convertToDto(pageRepo.save(page));
@@ -46,7 +50,11 @@ public class PageService {
         Page page = pageRepo.findById(pageId)
                 .orElseThrow(() -> new RuntimeException("Page does not exist"));
         page.setTitle(dto.getTitle());
-        page.setContent(dto.getContent());
+//        page.setContent(dto.getContent());
+        page.setContentHtml(dto.getContentHtml());
+        page.setDrawings(dto.getDrawing());
+        page.setCodeBlocks(dto.getCodeBlocks());
+        page.setImages(dto.getImages());
         page.setUpdatedDate(OffsetDateTime.now());
         return convertToDto(pageRepo.save(page));
     }
@@ -55,7 +63,11 @@ public class PageService {
         return new PageDTO(
                 page.getId(),
                 page.getTitle(),
-                page.getContent(),
+                page.getContentHtml(),
+                page.getDrawings(),
+                page.getCharts(),
+                page.getCodeBlocks(),
+                page.getImages(),
                 page.getPageOrder(),
                 page.getCreatedDate(),
                 page.getUpdatedDate(),
