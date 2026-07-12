@@ -15,7 +15,7 @@ public class PageDTO {
     private Long id;
     private String title;
     private String contentHtml;
-    private List<String> drawing;
+    private List<String> drawings;
     private List<Map<String, Object>> charts;
     private List<Map<String, String>> codeBlocks;
     private List<String> images;

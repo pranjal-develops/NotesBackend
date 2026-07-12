@@ -1,17 +1,13 @@
 package com.projects.note.controller;
 
 import com.projects.note.dto.NoteDTO;
-import com.projects.note.entity.Note;
 import com.projects.note.service.NotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notes")
@@ -24,113 +20,36 @@ public class NotesController {
     public List<NoteDTO> getAll(@RequestParam(required = false) String q,
                                 @RequestParam(required = false) String tag) {
         if (tag != null && !tag.isBlank()) {
-            return noteService.getByTag(tag).stream()
-                    .map(note -> new NoteDTO(note.getId(),
-                            note.getTitle(),
-                            note.getDescription(),
-                            note.getCreatedDate(),
-                            note.getUpdatedDate(),
-                            note.getDrawingData(),
-                            note.getColor(),
-                            note.isPinned(),
-                            note.getTags()))
-                    .collect(Collectors.toList());
+            return noteService.getByTag(tag);
         }
         if (q == null || q.isBlank()) {
-            return noteService.getAllNotes().stream()
-                    .map(note -> new NoteDTO(note.getId(),
-                            note.getTitle(),
-                            note.getDescription(),
-                            note.getCreatedDate(),
-                            note.getUpdatedDate(),
-                            note.getDrawingData(),
-                            note.getColor(),
-                            note.isPinned(),
-                            note.getTags()))
-                    .collect(Collectors.toList());
+            return noteService.getAllNotes();
         }
-        return noteService.search(q).stream()
-                .map(note -> new NoteDTO(note.getId(),
-                        note.getTitle(),
-                        note.getDescription(),
-                        note.getCreatedDate(),
-                        note.getUpdatedDate(),
-                        note.getDrawingData(),
-                        note.getColor(),
-                        note.isPinned(),
-                        note.getTags()))
-                .collect(Collectors.toList());
+        return noteService.search(q);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        Optional<Note> note = noteService.getNoteById(id);
-        return note.map(n -> new ResponseEntity<>(new NoteDTO(n.getId(),
-                        n.getTitle(),
-                        n.getDescription(),
-                        n.getCreatedDate(),
-                        n.getUpdatedDate(),
-                        n.getDrawingData(),
-                        n.getColor(),
-                        n.isPinned(),
-                        n.getTags()), HttpStatus.OK))
+        return noteService.getNoteById(id).map(ResponseEntity::ok)
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NoteDTO create(@RequestBody NoteDTO noteDTO) {
-        Note note = new Note(
-                noteDTO.getTitle(),
-                noteDTO.getDescription(),
-                noteDTO.getDrawingData(),
-                noteDTO.getColor(),
-                noteDTO.isPinned(),
-                noteDTO.getTags()
-        );
-        Note createdNote = noteService.createNote(note);
-        return new NoteDTO(createdNote.getId(),
-                createdNote.getTitle(),
-                createdNote.getDescription(),
-                createdNote.getDrawingData(),
-                createdNote.getColor(),
-                createdNote.isPinned(),
-                createdNote.getTags());
+        return noteService.createNote(noteDTO);
     }
-
-    // public Note create(@RequestBody Note note){
-    // return noteService.createNote(note);
-    // }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody NoteDTO noteDTO) {
-        Note old = noteService.getNoteById(id).orElse(null);
-        if (old != null) {
-            old.setTitle(
-                    noteDTO.getTitle() != null && !noteDTO.getTitle().isEmpty()
-                            ? noteDTO.getTitle()
-                            : old.getTitle());
-//            old.setDescription(
-//                    noteDTO.getDescription() != null && !noteDTO.getDescription().isEmpty()
-//                            ? noteDTO.getDescription()
-//                            : old.getDescription()); // It's stupid to add this. I don't know what I was thinking
-            old.setDescription(noteDTO.getDescription());
-            old.setDrawingData(noteDTO.getDrawingData());
-            old.setUpdatedDate(OffsetDateTime.now());
-            old.setColor(noteDTO.getColor());
-            old.setPinned(noteDTO.isPinned());
-            old.setTags(noteDTO.getTags());
-            Note updatedNote = noteService.createNote(old); // Save the updated note
-            return ResponseEntity.ok(new NoteDTO(updatedNote.getId(),
-                    updatedNote.getTitle(),
-                    updatedNote.getDescription(),
-                    updatedNote.getCreatedDate(),
-                    updatedNote.getDrawingData(),
-                    updatedNote.getColor(),
-                    updatedNote.isPinned(),
-                    updatedNote.getTags()));
+        try {
+            return ResponseEntity.ok(noteService.updateNote(id, noteDTO));
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("not found")) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")

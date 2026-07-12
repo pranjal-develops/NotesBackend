@@ -27,7 +27,11 @@ public class NotebookController {
         try {
             return ResponseEntity.ok(notebookService.getNotebookById(id));
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            if (e.getMessage().contains("Notebook not found")) {
+                return ResponseEntity.notFound().build();
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -43,7 +47,11 @@ public class NotebookController {
         try {
             return ResponseEntity.ok(notebookService.updateNotebook(id, notebookDTO));
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            if (e.getMessage().contains("Notebook not found")) {
+                return ResponseEntity.notFound().build();
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
