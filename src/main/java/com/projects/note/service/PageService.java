@@ -35,14 +35,16 @@ public class PageService {
                 .orElseThrow(() -> new RuntimeException("Notebook not present"));
         Page page = new Page();
         page.setTitle(dto.getTitle());
-//        page.setContent(dto.getContent());
         page.setContentHtml(dto.getContentHtml());
-        page.setDrawings(dto.getDrawing());
+        page.setDrawings(dto.getDrawings());
+        page.setCodeBlocks(dto.getCodeBlocks());
         page.setCharts(dto.getCharts());
         page.setImages(dto.getImages());
         page.setNotebook(notebook);
         page.setPageOrder(notebook.getPages().size());
-        return convertToDto(pageRepo.save(page));
+        
+        Page savedPage = pageRepo.save(page);
+        return convertToDto(savedPage);
     }
 
     @Transactional
@@ -52,8 +54,9 @@ public class PageService {
         page.setTitle(dto.getTitle());
 //        page.setContent(dto.getContent());
         page.setContentHtml(dto.getContentHtml());
-        page.setDrawings(dto.getDrawing());
+        page.setDrawings(dto.getDrawings());
         page.setCodeBlocks(dto.getCodeBlocks());
+        page.setCharts(dto.getCharts());
         page.setImages(dto.getImages());
         page.setUpdatedDate(OffsetDateTime.now());
         return convertToDto(pageRepo.save(page));
@@ -71,7 +74,7 @@ public class PageService {
                 page.getPageOrder(),
                 page.getCreatedDate(),
                 page.getUpdatedDate(),
-                page.getNotebook().getId()
+                page.getNotebook() != null ? page.getNotebook().getId() : null
         );
     }
 }

@@ -21,12 +21,17 @@ public class Notebook {
     private String color;
     private OffsetDateTime createdDate;
     private OffsetDateTime updatedDate;
+    @Lob
+    @Column(length = 10_000_000)
+    private String logo;
+
 
     @OneToMany(mappedBy = "notebook", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("pageOrder ASC")
     private List<Page> pages = new ArrayList<>();
 
     public Notebook() {
+        this.name = "";
         this.createdDate = OffsetDateTime.now();
         this.updatedDate = OffsetDateTime.now();
     }

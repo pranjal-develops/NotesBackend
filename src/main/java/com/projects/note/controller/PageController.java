@@ -29,17 +29,24 @@ public class PageController {
             PageDTO created = pageService.addPageToNotebook(notebookId, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            e.printStackTrace();
+            if (e.getMessage().contains("not present")) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/{pageId}")
-    public ResponseEntity<PageDTO> updatePage(@PathVariable Long pageId, @RequestBody PageDTO dto) {
+    public ResponseEntity<PageDTO> updatePage(@PathVariable Long notebookId, @PathVariable Long pageId, @RequestBody PageDTO dto) {
         try {
             return ResponseEntity.ok(pageService.updatePage(pageId, dto));
-
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            e.printStackTrace();
+            if (e.getMessage().contains("does not exist")) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

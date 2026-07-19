@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -33,13 +34,15 @@ public class NotebookService {
         notebook.setName(dto.getName());
         notebook.setDescription(dto.getDescription());
         notebook.setColor(dto.getColor());
+        notebook.setLogo(dto.getLogo());
         final Notebook savedNotebook = notebookRepo.save(notebook);
 
         if (dto.getPages() != null && !dto.getPages().isEmpty()) {
             List<Page> initialPages = dto.getPages().stream().map(summaryDto -> {
                 Page page = new Page();
                 page.setTitle(summaryDto.getTitle());
-                page.setContent("");
+                // page.setContent("");
+                page.setContentHtml("");
                 page.setPageOrder(summaryDto.getPageOrder());
                 page.setNotebook(savedNotebook);
                 return page;
@@ -60,9 +63,36 @@ public class NotebookService {
                         dto.getName() :
                         old.getName()
         );
-        old.setDescription(dto.getDescription());
-        old.setColor(dto.getColor());
+        old.setDescription(
+                dto.getDescription() != null
+                        ? dto.getDescription()
+                        : old.getDescription());
+        old.setColor(
+                dto.getColor() != null ?
+                        dto.getColor() :
+                        old.getColor()
+        );
+        old.setLogo(
+                dto.getLogo() != null ?
+                        dto.getLogo() :
+                        old.getLogo()
+        );
+        old.setUpdatedDate(OffsetDateTime.now());
         return convertToDTO(notebookRepo.save(old));
+    }
+
+    @Transactional
+    public void reorderPages(Long notebookId, List<Long> pageIds) {
+        Notebook notebook = notebookRepo.findById(notebookId).orElseThrow(() -> new RuntimeException("Notebook not found"));
+
+        notebook.getPages().forEach(page -> {
+            int index = pageIds.indexOf(page.getId());
+            if (index != -1) {
+                page.setPageOrder(index);
+            }
+        });
+
+        notebookRepo.save(notebook);
     }
 
     @Transactional
@@ -82,6 +112,7 @@ public class NotebookService {
                 notebook.getColor(),
                 notebook.getCreatedDate(),
                 notebook.getUpdatedDate(),
+                notebook.getLogo(),
                 pageSummaries
         );
     }

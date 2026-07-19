@@ -2,12 +2,14 @@ package com.projects.note.controller;
 
 import com.projects.note.dto.NotebookDTO;
 import com.projects.note.service.NotebookService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notebooks")
@@ -27,7 +29,11 @@ public class NotebookController {
         try {
             return ResponseEntity.ok(notebookService.getNotebookById(id));
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            if (e.getMessage().contains("Notebook not found")) {
+                return ResponseEntity.notFound().build();
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -37,13 +43,27 @@ public class NotebookController {
         return notebookService.createNotebook(notebookDTO);
     }
 
+    @PostMapping("/{id}/pages/reorder")
+    @Transactional
+    public ResponseEntity<Void> reorderPages(
+            @PathVariable Long id,
+            @RequestBody Map<String, List<Long>> body
+    ) {
+        notebookService.reorderPages(id, body.get("pageIds"));
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{id}")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<NotebookDTO> update(@PathVariable Long id, @RequestBody NotebookDTO notebookDTO) {
         try {
             return ResponseEntity.ok(notebookService.updateNotebook(id, notebookDTO));
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            if (e.getMessage().contains("Notebook not found")) {
+                return ResponseEntity.notFound().build();
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
