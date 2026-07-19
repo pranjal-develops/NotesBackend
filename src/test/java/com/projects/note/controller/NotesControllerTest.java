@@ -32,12 +32,12 @@ public class NotesControllerTest {
 
     @Test
     public void testGetAllNotes() {
-        Note note1 = new Note();
+        NoteDTO note1 = new NoteDTO();
         note1.setId(1L);
         note1.setTitle("title1");
         note1.setDescription("description1");
 
-        Note note2 = new Note();
+        NoteDTO note2 = new NoteDTO();
         note2.setId(2L);
         note2.setTitle("title2");
         note2.setDescription("description2");
@@ -53,12 +53,12 @@ public class NotesControllerTest {
 
     @Test
     public void testSearchWithTitleNotes() {
-        Note note1 = new Note();
+        NoteDTO note1 = new NoteDTO();
         note1.setId(1L);
         note1.setTitle("title1 search");
         note1.setDescription("description1");
 
-        Note note2 = new Note();
+        NoteDTO note2 = new NoteDTO();
         note2.setId(2L);
         note2.setTitle("title2");
         note2.setDescription("description2");
@@ -73,12 +73,12 @@ public class NotesControllerTest {
 
     @Test
     public void testSearchWithDescriptionNotes() {
-        Note note1 = new Note();
+        NoteDTO note1 = new NoteDTO();
         note1.setId(1L);
         note1.setTitle("title1");
         note1.setDescription("description1");
 
-        Note note2 = new Note();
+        NoteDTO note2 = new NoteDTO();
         note2.setId(2L);
         note2.setTitle("title2");
         note2.setDescription("description2 search");
@@ -94,7 +94,7 @@ public class NotesControllerTest {
     @Test
     public void testGetNoteByIDFound() {
         Long noteId = 1L;
-        Note note = new Note();
+        NoteDTO note = new NoteDTO();
         note.setId(noteId);
         note.setTitle("title");
         note.setDescription("description");
@@ -121,17 +121,17 @@ public class NotesControllerTest {
     @Test
     void testCreateNote() {
         NoteDTO noteDTO = new NoteDTO(null, "title", "description");
-        Note note = new Note();
+        NoteDTO note = new NoteDTO();
         note.setTitle(noteDTO.getTitle());
         note.setDescription(noteDTO.getDescription());
 
-        when(notesService.createNote(any(Note.class))).thenReturn(note);
+        when(notesService.createNote(any(NoteDTO.class))).thenReturn(note);
 
         NoteDTO createdNote = notesController.create(noteDTO);
         assertNotNull(createdNote);
         assertEquals("title", createdNote.getTitle());
         assertEquals("description", createdNote.getDescription());
-        verify(notesService, times(1)).createNote(any(Note.class));
+        verify(notesService, times(1)).createNote(any(NoteDTO.class));
     }
 
 
@@ -140,13 +140,13 @@ public class NotesControllerTest {
 
         Long noteId = 1L;
         NoteDTO noteDTO = new NoteDTO(null, "Updated Note", "Updated description");
-        Note note = new Note();
+        NoteDTO note = new NoteDTO();
         note.setId(noteDTO.getId());
         note.setTitle("Old Title");
         note.setDescription("Old Description");
 
         when(notesService.getNoteById(noteId)).thenReturn(Optional.of(note));
-        when(notesService.createNote(any(Note.class))).thenReturn(note);
+        when(notesService.createNote(any(NoteDTO.class))).thenReturn(note);
 
         ResponseEntity<?> response = notesController.update(noteId, noteDTO);
 
@@ -155,7 +155,7 @@ public class NotesControllerTest {
         assertNotNull(updatedNoteDTO);
         assertEquals("Updated Note", updatedNoteDTO.getTitle());
         assertEquals("Updated description", updatedNoteDTO.getDescription());
-        verify(notesService, times(1)).createNote(any(Note.class));
+        verify(notesService, times(1)).createNote(any(NoteDTO.class));
 
     }
 

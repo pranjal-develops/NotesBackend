@@ -2,12 +2,14 @@ package com.projects.note.controller;
 
 import com.projects.note.dto.NotebookDTO;
 import com.projects.note.service.NotebookService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notebooks")
@@ -39,6 +41,16 @@ public class NotebookController {
     @ResponseStatus(HttpStatus.CREATED)
     public NotebookDTO create(@RequestBody NotebookDTO notebookDTO) {
         return notebookService.createNotebook(notebookDTO);
+    }
+
+    @PostMapping("/{id}/pages/reorder")
+    @Transactional
+    public ResponseEntity<Void> reorderPages(
+            @PathVariable Long id,
+            @RequestBody Map<String, List<Long>> body
+    ) {
+        notebookService.reorderPages(id, body.get("pageIds"));
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")

@@ -82,6 +82,20 @@ public class NotebookService {
     }
 
     @Transactional
+    public void reorderPages(Long notebookId, List<Long> pageIds) {
+        Notebook notebook = notebookRepo.findById(notebookId).orElseThrow(() -> new RuntimeException("Notebook not found"));
+
+        notebook.getPages().forEach(page -> {
+            int index = pageIds.indexOf(page.getId());
+            if (index != -1) {
+                page.setPageOrder(index);
+            }
+        });
+
+        notebookRepo.save(notebook);
+    }
+
+    @Transactional
     public void deleteNotebook(Long id) {
         notebookRepo.deleteById(id);
     }
