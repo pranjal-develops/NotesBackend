@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**") // Apply to all endpoints starting with /api
                 .allowedOrigins(
                         "http://localhost:5173", // Local frontend development
-                        "https://your-frontend-domain.onrender.com" // Replace with your actual frontend Render URL
+                        "https://notesbackend-oufv.onrender.com/" // Replace with your actual frontend Render URL
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
