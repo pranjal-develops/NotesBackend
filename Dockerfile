@@ -9,7 +9,7 @@ COPY src ./src
 RUN mvn -q clean package -DskipTests
 
 # -------- Run stage --------
-FROM eclipse-temurin:25-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # Your expected output jar name:
