@@ -20,17 +20,7 @@ public class NoteDTO {
     private String color;
     private boolean isPinned;
     private List<String> tags;
-
-
-    // Constructors
-//    public NoteDTO() {}
-//
-//    public NoteDTO(Long id, String title, String description) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//    }
-//
+    private boolean isDrawing;
 
     public NoteDTO(Long id, String title, String description) {
         this.id = id;
@@ -39,103 +29,4 @@ public class NoteDTO {
         this.createdDate = OffsetDateTime.now();
         this.updatedDate = OffsetDateTime.now();
     }
-
-//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.createdDate = createdDate;
-//        this.updatedDate = OffsetDateTime.now();
-//    }
-
-//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.createdDate = createdDate;
-//        this.updatedDate = OffsetDateTime.now();
-//        this.drawingData = drawingData;
-//    }
-
-//    public NoteDTO(Long id, String title, String description, String drawingData) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.createdDate = OffsetDateTime.now();
-//        this.updatedDate = OffsetDateTime.now();
-//        this.drawingData = drawingData;
-//    }
-
-//    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.createdDate = createdDate;
-//        this.updatedDate = OffsetDateTime.now();
-//        this.drawingData = drawingData;
-//        this.color = color;
-//        this.isPinned = isPinned;
-//    }
-
-//    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.createdDate = OffsetDateTime.now();
-//        this.updatedDate = OffsetDateTime.now();
-//        this.drawingData = drawingData;
-//        this.color = color;
-//        this.isPinned = isPinned;
-//    }
-
-    public NoteDTO(Long id, String title, String description, String drawingData, String color, boolean isPinned, List<String> tags) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = OffsetDateTime.now();
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-        this.color = color;
-        this.isPinned = isPinned;
-        this.tags = tags;
-    }
-
-    public NoteDTO(Long id, String title, String description, OffsetDateTime createdDate, String drawingData, String color, boolean isPinned, List<String> tags) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.updatedDate = OffsetDateTime.now();
-        this.drawingData = drawingData;
-        this.color = color;
-        this.isPinned = isPinned;
-        this.tags = tags;
-    }
-
-//    // Getters and Setters
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-
-
 }
