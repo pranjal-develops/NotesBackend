@@ -14,4 +14,9 @@ public interface NotesRepo extends CrudRepository<Note, Long> {
     List<Note> findByKeyword(String keyword);
 
     List<Note> findByTagsContaining(String tag);
+
+    List<Note> findByIsDrawingTrue();
+
+    List<Note> findByIsDrawingAndTagsContaining(boolean isDrawing, String tag);
+
 }

@@ -1,5 +1,6 @@
 package com.projects.note.service;
 
+import com.projects.note.dto.DrawingDto;
 import com.projects.note.dto.NoteDTO;
 import com.projects.note.entity.Note;
 import com.projects.note.repository.NotesRepo;
@@ -24,7 +25,8 @@ public class NotesService {
                 noteDTO.getDrawingData(),
                 noteDTO.getColor(),
                 noteDTO.isPinned(),
-                noteDTO.getTags()
+                noteDTO.getTags(),
+                noteDTO.isDrawing()
         );
         return convertToNoteDTO(noteRepo.save(note));
     }
@@ -73,6 +75,7 @@ public class NotesService {
         old.setUpdatedDate(OffsetDateTime.now());
         old.setPinned(noteDTO.isPinned());
         old.setTags(noteDTO.getTags());
+        old.setDrawing(noteDTO.isDrawing());
         return convertToNoteDTO(noteRepo.save(old));
     }
 
@@ -81,6 +84,28 @@ public class NotesService {
                 note.getId(),
                 note.getTitle(),
                 note.getDescription(),
+                note.getCreatedDate(),
+                note.getUpdatedDate(),
+                note.getDrawingData(),
+                note.getColor(),
+                note.isPinned(),
+                note.getTags(),
+                note.isDrawing()
+        );
+    }
+
+    public List<DrawingDto> getAllDrawings() {
+        return ((List<Note>) noteRepo.findByIsDrawingTrue()).stream().map(this::convertToDrawingDto).toList(); // since findAll is returning Iterable<Note>, we are writing it as ((List <Note>) noteRepo.findAll())
+
+    }
+
+    public List<DrawingDto> getDrawingsByTag(String tag) {
+        return noteRepo.findByIsDrawingAndTagsContaining(true, tag).stream().map(this::convertToDrawingDto).toList();
+    }
+
+    private DrawingDto convertToDrawingDto(Note note) {
+        return new DrawingDto(
+                note.getId(),
                 note.getCreatedDate(),
                 note.getUpdatedDate(),
                 note.getDrawingData(),

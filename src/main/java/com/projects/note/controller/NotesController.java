@@ -1,5 +1,6 @@
 package com.projects.note.controller;
 
+import com.projects.note.dto.DrawingDto;
 import com.projects.note.dto.NoteDTO;
 import com.projects.note.service.NotesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,15 @@ public class NotesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         noteService.deleteNote(id);
+    }
+
+    @GetMapping("/drawings")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DrawingDto> getDrawings(@RequestParam(required = false) String tag) {
+        if (tag != null && !tag.isBlank()) {
+            return noteService.getDrawingsByTag(tag);
+        }
+        return noteService.getAllDrawings();
     }
 
 }
