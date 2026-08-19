@@ -1,11 +1,15 @@
 package com.projects.note.dto;
 
+import com.projects.note.entity.User;
+import com.projects.note.enums.ShareRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data //This annotation can create getter and setter
 @AllArgsConstructor //This annotation will create a constructor with parameters with all fields
@@ -21,6 +25,8 @@ public class NoteDTO {
     private boolean isPinned;
     private List<String> tags;
     private boolean isDrawing;
+    private User owner;
+    private Map<Long, ShareRole> collaboration = new HashMap<>();
 
     public NoteDTO(Long id, String title, String description) {
         this.id = id;
