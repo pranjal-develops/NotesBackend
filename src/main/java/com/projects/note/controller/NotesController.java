@@ -30,9 +30,9 @@ public class NotesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        return noteService.getNoteById(id).map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @ResponseStatus(HttpStatus.OK)
+    public NoteDTO getById(@PathVariable Long id) {
+        return noteService.getNoteById(id);
     }
 
     @PostMapping
