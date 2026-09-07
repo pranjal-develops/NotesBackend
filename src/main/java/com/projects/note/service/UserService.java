@@ -53,8 +53,8 @@ public class UserService {
         user.setPassword(encoder.encode(request.getPassword()));
         user.setPfp(request.getPfp());
         user.setRole(Role.USER);
-        log.info("Received pfp length: {}", request.getPfp().length());
-        log.info("Received pfp head: {}", request.getPfp().substring(0, Math.min(30, request.getPfp().length())));
+//        log.info("Received pfp length: {}", request.getPfp().length());
+//        log.info("Received pfp head: {}", request.getPfp().substring(0, Math.min(30, request.getPfp().length())));
 
         return convertToResponse(userRepo.save(user));
     }
